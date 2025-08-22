@@ -1,1 +1,584 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Completo - Generador de Figuras para Cálculo de Centroide</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+            text-align: center;
+        }
+        h2 {
+            color: #34495e;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+            margin-top: 30px;
+        }
+        h3 {
+            color: #2c3e50;
+            margin-top: 25px;
+        }
+        h4 {
+            color: #34495e;
+            margin-top: 20px;
+        }
+        .code-block {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+        .math {
+            background-color: #f0f8ff;
+            border: 1px solid #b0d4f1;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+        }
+        .parameter-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        .parameter-table th, .parameter-table td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        .parameter-table th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        .parameter-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .info {
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        .toc {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .toc ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        .toc li {
+            margin: 8px 0;
+        }
+        .toc a {
+            text-decoration: none;
+            color: #3498db;
+            font-weight: 500;
+        }
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        .algorithm {
+            background-color: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 4px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .algorithm ol {
+            padding-left: 20px;
+        }
+        .algorithm li {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Manual Completo - Generador de Figuras para Cálculo de Centroide</h1>
+        <p><strong>Versión:</strong> 2.6.2 | <strong>Autor:</strong> Alfarano Javier | <strong>Asignatura:</strong> Física I</p>
+        
+        <div class="toc">
+            <h3>Índice de Contenidos</h3>
+            <ul>
+                <li><a href="#introduccion">1. Introducción</a></li>
+                <li><a href="#funcionalidades">2. Funcionalidades Principales</a></li>
+                <li><a href="#parametros">3. Parámetros y Configuración</a></li>
+                <li><a href="#algoritmo">4. Algoritmo de Generación</a></li>
+                <li><a href="#matematicas">5. Fundamentos Matemáticos</a></li>
+                <li><a href="#codigo">6. Análisis del Código</a></li>
+                <li><a href="#ejemplos">7. Ejemplos de Uso</a></li>
+                <li><a href="#troubleshooting">8. Solución de Problemas</a></li>
+                <li><a href="#referencias">9. Referencias</a></li>
+            </ul>
+        </div>
 
+        <h2 id="introduccion">1. Introducción</h2>
+        <p>El <strong>Generador de Figuras para Cálculo de Centroide</strong> es una herramienta educativa diseñada para crear figuras geométricas complejas que permitan a los estudiantes practicar el cálculo del centro de gravedad (centroide) de formas compuestas.</p>
+        
+        <div class="info">
+            <strong>Propósito Educativo:</strong> Este generador crea ejercicios que combinan formas básicas (rectángulos, triángulos) con elementos curvos (arcos de circunferencia) y huecos, simulando problemas reales de ingeniería y física.
+        </div>
+
+        <h2 id="funcionalidades">2. Funcionalidades Principales</h2>
+        
+        <h3>2.1 Generación de Contornos</h3>
+        <ul>
+            <li><strong>Polígonos ortogonales:</strong> Figuras con lados paralelos a los ejes coordenados</li>
+            <li><strong>Diagonales 45°:</strong> Líneas diagonales que conectan vértices en ángulos de 45°</li>
+            <li><strong>Arcos circulares:</strong> Cuartos de círculo y semicircunferencias integrados en el contorno</li>
+            <li><strong>Huecos:</strong> Agujeros internos de diferentes formas (círculos, triángulos, cuadriláteros)</li>
+        </ul>
+
+        <h3>2.2 Cálculo Automático del Centroide</h3>
+        <ul>
+            <li><strong>Coordenadas exactas:</strong> Cálculo preciso del centro de gravedad</li>
+            <li><strong>Unidades de grilla:</strong> Resultados en coordenadas de la grilla de referencia</li>
+            <li><strong>Validación geométrica:</strong> Verificación de que la figura sea válida</li>
+        </ul>
+
+        <h3>2.3 Exportación de Figuras</h3>
+        <ul>
+            <li><strong>SVG:</strong> Formato vectorial para impresión de alta calidad</li>
+            <li><strong>PNG:</strong> Imagen raster de alta resolución (9x escala)</li>
+            <li><strong>Personalización:</strong> Colores, grillas y opciones de visualización</li>
+        </ul>
+
+        <h2 id="parametros">3. Parámetros y Configuración</h2>
+        
+        <h3>3.1 Parámetros de Grilla</h3>
+        <table class="parameter-table">
+            <tr>
+                <th>Parámetro</th>
+                <th>Rango</th>
+                <th>Descripción</th>
+                <th>Efecto</th>
+            </tr>
+            <tr>
+                <td><strong>Puntos en X</strong></td>
+                <td>6 - 50</td>
+                <td>Número de puntos en el eje horizontal</td>
+                <td>Controla el ancho y la resolución horizontal de la figura</td>
+            </tr>
+            <tr>
+                <td><strong>Puntos en Y</strong></td>
+                <td>6 - 50</td>
+                <td>Número de puntos en el eje vertical</td>
+                <td>Controla la altura y la resolución vertical de la figura</td>
+            </tr>
+        </table>
+
+        <h3>3.2 Reglas de Trazado</h3>
+        <table class="parameter-table">
+            <tr>
+                <th>Parámetro</th>
+                <th>Rango</th>
+                <th>Descripción</th>
+                <th>Efecto</th>
+            </tr>
+            <tr>
+                <td><strong>Máx. esquinas</strong></td>
+                <td>4 - 400</td>
+                <td>Número máximo de vértices en el contorno</td>
+                <td>Controla la complejidad de la figura</td>
+            </tr>
+            <tr>
+                <td><strong>Máx. diagonales 45°</strong></td>
+                <td>0 - 400</td>
+                <td>Número máximo de líneas diagonales</td>
+                <td>0 desactiva diagonales, >0 las habilita</td>
+            </tr>
+            <tr>
+                <td><strong>Rectas tras esquina (mín.)</strong></td>
+                <td>1 - 50</td>
+                <td>Largo mínimo de segmentos rectos después de girar</td>
+                <td>Evita figuras demasiado "zigzagueantes"</td>
+            </tr>
+            <tr>
+                <td><strong>Diagonales tras diagonal (mín.)</strong></td>
+                <td>1 - 50</td>
+                <td>Largo mínimo de cada diagonal</td>
+                <td>Controla la suavidad de las transiciones</td>
+            </tr>
+        </table>
+
+        <h3>3.3 Parámetros de Arcos</h3>
+        <table class="parameter-table">
+            <tr>
+                <th>Parámetro</th>
+                <th>Valores</th>
+                <th>Descripción</th>
+                <th>Efecto</th>
+            </tr>
+            <tr>
+                <td><strong>Cuartos de círculo</strong></td>
+                <td>Aleatorio o 0-20</td>
+                <td>Número de arcos de 90°</td>
+                <td>Añade curvatura al contorno</td>
+            </tr>
+            <tr>
+                <td><strong>Semicircunferencias</strong></td>
+                <td>Aleatorio o 0-20</td>
+                <td>Número de arcos de 180°</td>
+                <td>Crea formas más orgánicas</td>
+            </tr>
+        </table>
+
+        <h3>3.4 Parámetros de Huecos</h3>
+        <table class="parameter-table">
+            <tr>
+                <th>Parámetro</th>
+                <th>Rango</th>
+                <th>Descripción</th>
+                <th>Efecto</th>
+            </tr>
+            <tr>
+                <td><strong>Huecos aleatorios</strong></td>
+                <td>True/False</td>
+                <td>Generación automática de huecos</td>
+                <td>Simplifica la configuración</td>
+            </tr>
+            <tr>
+                <td><strong>Círculos</strong></td>
+                <td>0 - 50</td>
+                <td>Número de huecos circulares</td>
+                <td>Agujeros redondos internos</td>
+            </tr>
+            <tr>
+                <td><strong>Triángulos</strong></td>
+                <td>0 - 50</td>
+                <td>Número de huecos triangulares</td>
+                <td>Agujeros triangulares internos</td>
+            </tr>
+            <tr>
+                <td><strong>Cuadriláteros</strong></td>
+                <td>0 - 50</td>
+                <td>Número de huecos cuadriláteros</td>
+                <td>Agujeros rectangulares internos</td>
+            </tr>
+        </table>
+
+        <h2 id="algoritmo">4. Algoritmo de Generación</h2>
+        
+        <div class="algorithm">
+            <h3>4.1 Proceso Principal</h3>
+            <ol>
+                <li><strong>Inicialización:</strong> Crear una grilla base con las dimensiones especificadas</li>
+                <li><strong>Generación de contorno:</strong> Crear un polígono ortogonal que respete las reglas de trazado</li>
+                <li><strong>Aplicación de arcos:</strong> Integrar cuartos de círculo y semicircunferencias en el contorno</li>
+                <li><strong>Generación de huecos:</strong> Crear agujeros internos de diferentes formas</li>
+                <li><strong>Validación geométrica:</strong> Verificar que la figura sea válida y no tenga superposiciones</li>
+                <li><strong>Cálculo del centroide:</strong> Determinar el centro de gravedad de la figura compuesta</li>
+            </ol>
+        </div>
+
+        <h3>4.2 Generación de Contorno</h3>
+        <p>El algoritmo utiliza un enfoque de "trazado inteligente" que:</p>
+        <ul>
+            <li>Comienza en un punto aleatorio de la grilla</li>
+            <li>Se mueve en direcciones ortogonales (horizontal/vertical)</li>
+            <li>Ocasionalmente toma direcciones diagonales (45°)</li>
+            <li>Respetando las reglas de longitud mínima</li>
+            <li>Evitando auto-intersecciones</li>
+        </ul>
+
+        <h3>4.3 Integración de Arcos</h3>
+        <p>Los arcos se integran mediante:</p>
+        <ul>
+            <li><strong>Subdivisión adaptativa:</strong> El número de segmentos se ajusta según el radio</li>
+            <li><strong>Fórmula:</strong> <code>steps = max(24, int(2 * π * r / max(cs/2, 1e-6)))</code></li>
+            <li><strong>Conversión a vértices:</strong> Los arcos se convierten en secuencias de puntos</li>
+            <li><strong>Integración suave:</strong> Los vértices del arco se insertan en el contorno</li>
+        </ul>
+
+        <h2 id="matematicas">5. Fundamentos Matemáticos</h2>
+        
+        <h3>5.1 Cálculo del Centroide</h3>
+        <p>El centro de gravedad de una figura compuesta se calcula usando el principio de superposición:</p>
+        
+        <div class="math">
+            <strong>Centroide X:</strong> x̄ = (ΣAᵢ·x̄ᵢ) / (ΣAᵢ)<br>
+            <strong>Centroide Y:</strong> ȳ = (ΣAᵢ·ȳᵢ) / (ΣAᵢ)
+        </div>
+        
+        <p>Donde:</p>
+        <ul>
+            <li><strong>Aᵢ:</strong> Área de cada componente (contorno principal - huecos)</li>
+            <li><strong>x̄ᵢ, ȳᵢ:</strong> Centroide de cada componente</li>
+            <li><strong>ΣAᵢ:</strong> Área total de la figura</li>
+        </ul>
+
+        <h3>5.2 Áreas de Formas Básicas</h3>
+        <div class="math">
+            <strong>Rectángulo:</strong> A = base × altura<br>
+            <strong>Triángulo:</strong> A = (base × altura) / 2<br>
+            <strong>Cuarto de círculo:</strong> A = πr² / 4<br>
+            <strong>Semicírculo:</strong> A = πr² / 2
+        </div>
+
+        <h3>5.3 Centroides de Formas Básicas</h3>
+        <div class="math">
+            <strong>Rectángulo:</strong> x̄ = base/2, ȳ = altura/2<br>
+            <strong>Triángulo:</strong> x̄ = base/3, ȳ = altura/3<br>
+            <strong>Cuarto de círculo:</strong> x̄ = ȳ = 4r/(3π)<br>
+            <strong>Semicírculo:</strong> x̄ = 0, ȳ = 4r/(3π)
+        </div>
+
+        <h3>5.4 Validación Geométrica</h3>
+        <p>La figura se valida usando:</p>
+        <ul>
+            <li><strong>Test de punto en polígono:</strong> Algoritmo ray-casting</li>
+            <li><strong>Verificación de huecos:</strong> Los huecos deben estar completamente dentro del contorno</li>
+            <li><strong>Margen de seguridad:</strong> ε = 1e-9 para evitar errores numéricos</li>
+            <li><strong>No contacto:</strong> Los huecos no pueden tocar el contorno principal</li>
+        </ul>
+
+        <h2 id="codigo">6. Análisis del Código</h2>
+        
+        <h3>6.1 Estructura Principal</h3>
+        <p>El generador está organizado en módulos:</p>
+        
+        <div class="code-block">
+<strong>core/generator_contour.py</strong> - Lógica principal de generación
+├── generate_contour() - Función principal
+├── _generate_contour() - Generación del contorno base
+├── _apply_arcs_multiR() - Integración de arcos
+├── _generate_hole() - Generación de huecos
+└── _valid_polygon() - Validación geométrica
+
+<strong>ui/streamlit_app.py</strong> - Interfaz de usuario
+├── Controles del sidebar
+├── Generación de ejercicios
+└── Visualización de resultados
+
+<strong>ui/render_svg.py</strong> - Exportación a SVG
+└── exercise_to_svg() - Conversión a formato vectorial
+
+<strong>ui/render_png.py</strong> - Exportación a PNG
+└── exercise_to_png_bytes() - Conversión a imagen raster
+        </div>
+
+        <h3>6.2 Función Principal de Generación</h3>
+        <div class="code-block">
+def generate_contour(
+    seed=None,                    # Semilla para reproducibilidad
+    max_corners=20,              # Máximo número de esquinas
+    nx_range=(12, 20),          # Rango de puntos en X
+    ny_range=(12, 20),          # Rango de puntos en Y
+    allow_diagonals_45=True,     # Permitir diagonales
+    max_diagonals=10,            # Máximo de diagonales
+    min_straights_after_corner=2, # Mínimo de rectas tras esquina
+    min_diags_after_diag=2,      # Mínimo de diagonales consecutivas
+    quarter_arcs_count=None,     # Cuartos de círculo
+    semi_arcs_count=None,        # Semicircunferencias
+    holes_spec=None,             # Especificación de huecos
+    portable_seed=None,          # Seed portátil PS1
+    attempts=16,                 # Intentos por seed
+    correction_max_offset=128    # Offset para corrección
+):
+    # Implementación del algoritmo principal
+        </div>
+
+        <h3>6.3 Algoritmo de Trazado</h3>
+        <div class="code-block">
+def _generate_contour(seed, nx, ny, max_corners, allow_diagonals, 
+                     max_diagonals, min_straights, min_diags):
+    # 1. Inicializar grilla y punto de partida
+    grid = [[0 for _ in range(nx)] for _ in range(ny)]
+    start_x, start_y = random.randint(0, nx-1), random.randint(0, ny-1)
+    
+    # 2. Trazado principal con reglas de movimiento
+    current_x, current_y = start_x, start_y
+    direction = random.choice([(1,0), (0,1), (-1,0), (0,-1)])
+    
+    while len(vertices) < max_corners:
+        # Aplicar reglas de movimiento
+        # Verificar límites de grilla
+        # Evitar auto-intersecciones
+        # Generar nuevo vértice
+        </div>
+
+        <h3>6.4 Integración de Arcos</h3>
+        <div class="code-block">
+def _apply_arcs_multiR(vertices, quarter_arcs_count, semi_arcs_count):
+    # 1. Identificar esquinas candidatas para arcos
+    corners = []
+    for i, (x, y) in enumerate(vertices):
+        if _is_corner(vertices, i):
+            corners.append(i)
+    
+    # 2. Seleccionar esquinas aleatorias para arcos
+    selected_corners = random.sample(corners, min(len(corners), 
+                                                 quarter_arcs_count + semi_arcs_count))
+    
+    # 3. Generar arcos y reemplazar vértices
+    for corner_idx in selected_corners:
+        arc_vertices = _generate_arc_vertices(vertices[corner_idx], radius)
+        vertices = _replace_vertices(vertices, corner_idx, arc_vertices)
+        </div>
+
+        <h2 id="ejemplos">7. Ejemplos de Uso</h2>
+        
+        <h3>7.1 Configuración Básica</h3>
+        <div class="code-block">
+# Generar figura simple con grilla 15x15
+ex = generate_contour(
+    nx_range=(15, 15),
+    ny_range=(15, 15),
+    max_corners=12,
+    allow_diagonals_45=False,
+    quarter_arcs_count=0,
+    semi_arcs_count=0
+)
+        </div>
+
+        <h3>7.2 Figura con Arcos</h3>
+        <div class="code-block">
+# Generar figura con arcos y diagonales
+ex = generate_contour(
+    nx_range=(18, 22),
+    ny_range=(16, 20),
+    max_corners=25,
+    allow_diagonals_45=True,
+    max_diagonals=8,
+    quarter_arcs_count=3,
+    semi_arcs_count=2
+)
+        </div>
+
+        <h3>7.3 Figura Compleja con Huecos</h3>
+        <div class="code-block">
+# Generar figura compleja con huecos
+ex = generate_contour(
+    nx_range=(20, 25),
+    ny_range=(18, 23),
+    max_corners=30,
+    allow_diagonals_45=True,
+    max_diagonals=12,
+    quarter_arcs_count=4,
+    semi_arcs_count=3,
+    holes_spec={
+        "circles": 2,
+        "triangles": 1,
+        "quads": 2
+    }
+)
+        </div>
+
+        <h2 id="troubleshooting">8. Solución de Problemas</h2>
+        
+        <h3>8.1 Problemas Comunes</h3>
+        
+        <div class="warning">
+            <strong>Error: "No se pudo generar figura válida"</strong><br>
+            <strong>Causa:</strong> Parámetros demasiado restrictivos o grilla muy pequeña<br>
+            <strong>Solución:</strong> Aumentar max_corners, reducir restricciones, o usar grilla más grande
+        </div>
+
+        <div class="warning">
+            <strong>Error: "Figura demasiado simple"</strong><br>
+            <strong>Causa:</strong> max_corners muy bajo o reglas muy restrictivas<br>
+            <strong>Solución:</strong> Aumentar max_corners y permitir más diagonales
+        </div>
+
+        <div class="warning">
+            <strong>Error: "Huecos fuera del contorno"</br>
+            <strong>Causa:</strong> Huecos muy grandes para el contorno<br>
+            <strong>Solución:</strong> Reducir el tamaño de los huecos o aumentar el contorno
+        </div>
+
+        <h3>8.2 Optimización de Rendimiento</h3>
+        <ul>
+            <li><strong>Modo rápido:</strong> Reduce el número de intentos para generación más rápida</li>
+            <li><strong>Grillas moderadas:</strong> Evitar grillas muy grandes (>30x30) para mejor rendimiento</li>
+            <li><strong>Límites de complejidad:</strong> max_corners > 50 puede ser lento</li>
+        </ul>
+
+        <h3>8.3 Reproducibilidad</h3>
+        <div class="info">
+            <strong>Seed PS1:</strong> Para reproducir exactamente la misma figura, usa una seed portátil PS1<br>
+            <strong>Formato:</strong> PS1-xxxxxxxxxx-xxxxxxxxxx<br>
+            <strong>Ejemplo:</strong> PS1-193x5c5k88z9m-57jgta7tpw5c
+        </div>
+
+        <h2 id="referencias">9. Referencias</h2>
+        
+        <h3>9.1 Fundamentos Matemáticos</h3>
+        <ul>
+            <li><strong>Geometría Computacional:</strong> Algoritmos para polígonos y formas compuestas</li>
+            <li><strong>Mecánica de Sólidos:</strong> Cálculo de centroides y momentos de inercia</li>
+            <li><strong>Análisis Numérico:</strong> Métodos para integración y cálculo de áreas</li>
+        </ul>
+
+        <h3>9.2 Implementación Técnica</h3>
+        <ul>
+            <li><strong>Python:</strong> Lenguaje de programación principal</li>
+            <li><strong>Streamlit:</strong> Framework para interfaz web</li>
+            <li><strong>PIL/Pillow:</strong> Procesamiento de imágenes</li>
+            <li><strong>NumPy:</strong> Operaciones numéricas y arrays</li>
+        </ul>
+
+        <h3>9.3 Estándares y Formatos</h3>
+        <ul>
+            <li><strong>SVG:</strong> Formato vectorial escalable</li>
+            <li><strong>PNG:</strong> Formato de imagen raster sin pérdida</li>
+            <li><strong>CHM:</strong> Formato de ayuda compilada de Microsoft</li>
+        </ul>
+
+        <div class="success">
+            <h3>Conclusión</h3>
+            <p>El Generador de Figuras para Cálculo de Centroide es una herramienta educativa poderosa que combina algoritmos geométricos avanzados con una interfaz de usuario intuitiva. Permite crear ejercicios complejos y realistas para el estudio de la física y la ingeniería, proporcionando tanto los problemas como las soluciones exactas.</p>
+            
+            <p>La implementación técnica es robusta, incluyendo validación geométrica, manejo de errores y optimización de rendimiento. El código está bien estructurado y documentado, facilitando su mantenimiento y extensión futura.</p>
+        </div>
+
+        <hr>
+        <p style="text-align: center; color: #666; font-size: 0.9em;">
+            <strong>Generador de Figuras para Cálculo de Centroide</strong><br>
+            Versión 2.6.2 | Física I - Alfarano Javier<br>
+            Documentación generada automáticamente
+        </p>
+    </div>
+</body>
+</html>
