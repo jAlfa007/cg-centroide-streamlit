@@ -12,24 +12,6 @@
 - Python 3.9 o superior  
 - Git (opcional, para clonar el repositorio)  
 
-### Instalación
-Clonar el repositorio o descargarlo en tu máquina:
-```bash
-git clone https://github.com/<usuario>/<repo>.git
-cd <repo>
-```
-
-Crear entorno virtual e instalar dependencias:
-```bash
-python -m venv .venv
-# Linux/Mac
-source .venv/bin/activate
-# Windows
-.venv\Scripts\activate
-
-pip install -r requirements.txt
-```
-
 ### Ejecución local
 ```bash
 streamlit run ui/streamlit_app.py
