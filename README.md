@@ -91,24 +91,6 @@ El objetivo es ofrecer una **herramienta educativa práctica y visual**, que fac
 - Python 3.9 or higher  
 - Git (optional, to clone the repository)  
 
-### Installation
-Clone the repository or download it:
-```bash
-git clone https://github.com/<user>/<repo>.git
-cd <repo>
-```
-
-Create a virtual environment and install dependencies:
-```bash
-python -m venv .venv
-# Linux/Mac
-source .venv/bin/activate
-# Windows
-.venv\Scripts\activate
-
-pip install -r requirements.txt
-```
-
 ### Run locally
 ```bash
 streamlit run ui/streamlit_app.py
